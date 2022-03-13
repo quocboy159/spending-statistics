@@ -2,7 +2,10 @@ import {
     getAuth,
     GoogleAuthProvider,
     signInWithPopup,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendEmailVerification 
+
 } from "firebase/auth";
 import getFirebase from "../infrastructures/filebase";
 import { addUser, getUserById } from "./usersService";
@@ -33,25 +36,50 @@ const signinWithGoogle = async () => {
     }
 }
 
-const signinWithEmailAndPassword = async (email, password) => {
+const loginWithEmailAndPassword = async (email, password) => {
     try {
+        debugger
         const response = await signInWithEmailAndPassword(auth, email, password)
         const { user } = response
-        const userData = await getUserById(user.uid)
-        if (!userData) {
-            await addUser({
-                userId: user.uid,
-                name: user.displayName,
-                authProvider: AuthProviders.LOCAL,
-                email: user.email
-            })
+        if (!user) {
+            throw 'Your account is not found'
+        }
+        if (!user.emailVerified) {
+            throw 'Your account is not activate yet'
         }
     } catch (e) {
+        alert(e)
         throw e
     }
 }
 
+const registerWithEmailAndPassword = async (email, fullName, password) => {
+    try {
+        const response = await createUserWithEmailAndPassword(auth, email, password)
+        const { user } = response
+        await sendEmailVerification(user, {
+            url: 'http://localhost:3000/'
+        } )
+        const userData = await getUserById(user.uid)
+        if (!userData) {
+            await addUser({
+                userId: user.uid,
+                name: fullName,
+                authProvider: AuthProviders.LOCAL,
+                email: user.email
+            })
+        }
+
+    } catch (ex) {
+        throw ex
+    }
+}
+
+const isAuthenticated = () => !!auth.currentUser
+
 export {
     signinWithGoogle,
-    signinWithEmailAndPassword
+    loginWithEmailAndPassword,
+    registerWithEmailAndPassword,
+    isAuthenticated
 }

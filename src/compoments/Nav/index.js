@@ -29,10 +29,10 @@ function Nav() {
                             <NavLink to="/" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>Home</NavLink >
                         </li>
                         <li>
-                            <NavLink to="/about" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>About</NavLink >
+                            <NavLink to="about" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>About</NavLink >
                         </li>
                         <li>
-                            <NavLink to="/login" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>Login</NavLink >
+                            <NavLink to="login" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>Login</NavLink >
                         </li>
                     </ul>
                 </div>
