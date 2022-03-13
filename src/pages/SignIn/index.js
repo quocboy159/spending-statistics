@@ -36,10 +36,13 @@ const SignIn = () => {
                     </div>
                     <button id="sign-in-button" onClick={handleSignIn} className="text-center w-full hover:bg-blue-700 bg-blue-900 rounded-md text-white py-3 font-medium">Login</button>
                     <div className="text-center flex justify-center">
+                        <p>or login with</p>
+                    </div>
+                    <div className="text-center flex justify-center">
                         <Icon onClick={handleSignInWithGoogle} />
                     </div>
-                    <div className="pt-8">
-                        Don't have an account?<Link to="/signup" className="font-medium text-blue-900 hover:cursor-pointer hover:underline rounded-md p-2">Sign Up</Link>
+                    <div className="flex text-center justify-center">
+                        Don't have an account? <Link to="/signup" className="pl-1 font-medium text-blue-900 hover:cursor-pointer hover:underline rounded-md">Sign Up</Link>
                     </div>
                 </form>
             </div>
