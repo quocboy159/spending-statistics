@@ -1,6 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import useInput from "../../hooks/useInput"
-import { signinWithGoogle, loginWithEmailAndPassword, registerWithEmailAndPassword } from "../../services/authService";
+import { signinWithGoogle, loginWithEmailAndPassword } from "../../services/authService";
 import Icon from "../../compoments/Icon";
 import { TITLE_PAGE } from '../../commons'
 

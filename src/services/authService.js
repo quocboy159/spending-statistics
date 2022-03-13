@@ -4,7 +4,7 @@ import {
     signInWithPopup,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    sendEmailVerification 
+    sendEmailVerification
 
 } from "firebase/auth";
 import getFirebase from "../infrastructures/filebase";
@@ -38,14 +38,13 @@ const signinWithGoogle = async () => {
 
 const loginWithEmailAndPassword = async (email, password) => {
     try {
-        debugger
         const response = await signInWithEmailAndPassword(auth, email, password)
         const { user } = response
         if (!user) {
-            throw 'Your account is not found'
+            throw new Error('Your account is not found')
         }
         if (!user.emailVerified) {
-            throw 'Your account is not activate yet'
+            throw new Error('Your account is not activate yet')
         }
     } catch (e) {
         alert(e)
@@ -59,7 +58,7 @@ const registerWithEmailAndPassword = async (email, fullName, password) => {
         const { user } = response
         await sendEmailVerification(user, {
             url: 'http://localhost:3000/'
-        } )
+        })
         const userData = await getUserById(user.uid)
         if (!userData) {
             await addUser({
