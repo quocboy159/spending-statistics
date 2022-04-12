@@ -1,12 +1,18 @@
 import clsx from "clsx"
 import { memo, useState } from "react"
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import styles from "./Nav.module.css"
+import { isAuthenticated, logout } from "../../services/authService"
 
 function Nav() {
+    const navigate = useNavigate()
     const [isCollapse, setIsCollapse] = useState(true)
     const handleCollapse = () => {
         setIsCollapse(!isCollapse)
+    }
+    const handleLogout = async () => {
+        await logout()
+        navigate('/login')
     }
 
     return <header>
@@ -32,7 +38,7 @@ function Nav() {
                             <NavLink to="about" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>About</NavLink >
                         </li>
                         <li>
-                            <NavLink to="login" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>Login</NavLink >
+                            {isAuthenticated() && <button onClick={handleLogout}>Log out</button>}
                         </li>
                     </ul>
                 </div>

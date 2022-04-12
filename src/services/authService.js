@@ -4,7 +4,8 @@ import {
     signInWithPopup,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    sendEmailVerification
+    sendEmailVerification,
+    signOut
 
 } from "firebase/auth";
 import getFirebase from "../infrastructures/filebase";
@@ -17,6 +18,10 @@ provider.setCustomParameters({
     'login_hint': 'user@gmail.com'
 })
 const auth = getAuth(app)
+
+const logout = async () => {
+    await signOut(auth);
+}
 
 const signinWithGoogle = async () => {
     try {
@@ -80,5 +85,6 @@ export {
     signinWithGoogle,
     loginWithEmailAndPassword,
     registerWithEmailAndPassword,
-    isAuthenticated
+    isAuthenticated,
+    logout
 }

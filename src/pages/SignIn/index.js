@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import useInput from "../../hooks/useInput"
 import { signinWithGoogle, loginWithEmailAndPassword } from "../../services/authService";
 import Icon from "../../compoments/Icon";
@@ -6,6 +6,7 @@ import { TITLE_PAGE } from '../../commons'
 
 const SignIn = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     // login by email, password
     const emailInput = useInput("");
@@ -13,13 +14,14 @@ const SignIn = () => {
     const handleSignIn = async (event) => {
         event.preventDefault()
         await loginWithEmailAndPassword(emailInput.value, passwordInput.value)
-        navigate("/")
+        navigate(location.state?.from?.pathname ?? "/")
     }
     // login by google
     const handleSignInWithGoogle = async (event) => {
         event.preventDefault()
         await signinWithGoogle()
-        navigate("/")
+        debugger
+        navigate(location.state?.from?.pathname ?? "/")
     }
 
     return <>
