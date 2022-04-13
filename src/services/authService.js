@@ -5,12 +5,14 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     sendEmailVerification,
-    signOut
+    signOut,
+    onAuthStateChanged
 
 } from "firebase/auth";
 import getFirebase from "../infrastructures/filebase";
 import { addUser, getUserById } from "./usersService";
 import { AuthProviders } from "../commons/enums";
+import { LOGGED_IN_USER } from "../commons";
 
 const app = getFirebase();
 const provider = new GoogleAuthProvider()
@@ -18,6 +20,15 @@ provider.setCustomParameters({
     'login_hint': 'user@gmail.com'
 })
 const auth = getAuth(app)
+
+onAuthStateChanged(auth, user => {
+    if(user){
+        localStorage.setItem(LOGGED_IN_USER, user)
+    } else{
+        localStorage.removeItem(LOGGED_IN_USER)
+    }
+   
+})
 
 const logout = async () => {
     await signOut(auth);
@@ -79,7 +90,7 @@ const registerWithEmailAndPassword = async (email, fullName, password) => {
     }
 }
 
-const isAuthenticated = () => !!auth.currentUser
+const isAuthenticated = () => !!localStorage.getItem(LOGGED_IN_USER)
 
 export {
     signinWithGoogle,

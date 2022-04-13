@@ -20,7 +20,6 @@ const SignIn = () => {
     const handleSignInWithGoogle = async (event) => {
         event.preventDefault()
         await signinWithGoogle()
-        debugger
         navigate(location.state?.from?.pathname ?? "/")
     }
 
